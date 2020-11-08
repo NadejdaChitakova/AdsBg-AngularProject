@@ -1,0 +1,14 @@
+<div class="card" tyle="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">{{ ad.title }}</h5>
+    <p class="card-text">
+      {{ ad.description }}
+    </p>
+    <p class="card-text">
+      {{ ad.likes }}, {{ ad.type }}, {{ ad.category }}, {{ ad.appliedUsers }}
+    </p>
+
+    <i class="far fa-heart"></i>
+    <button class="btn btn-light" (click)="Like()">like!</button>
+  </div>
+</div>
