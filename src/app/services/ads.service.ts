@@ -66,7 +66,10 @@ export class AdsService {
   addCandidate(ad: Ad) {
     if (this.authService.role !== Roles.USER) return;
 
-    ad.appliedUsers.push(this.authService.loggedInUser.id);
+    let userId = this.authService.loggedInUser.id;
+    if (ad.appliedUsers.includes(userId)) return;
+
+    ad.appliedUsers.push(userId);
 
     this.http
       .put<Ad>(ADS_URL + `/${ad.id}`, ad, this.httpOptions)
@@ -80,7 +83,11 @@ export class AdsService {
   like(ad: Ad) {
     if (this.authService.role !== Roles.USER) return;
 
-    ad.likes.push(this.authService.loggedInUser.id);
+    let userId = this.authService.loggedInUser.id;
+
+    if (ad.likes.includes(userId)) return;
+
+    ad.likes.push(userId);
     this.http
       .put<Ad>(ADS_URL + `/${ad.id}`, ad, this.httpOptions)
       .subscribe((ad) => {

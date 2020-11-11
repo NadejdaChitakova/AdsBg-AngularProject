@@ -29,7 +29,7 @@
       "likes": [1],
       "type": "fullTime",
       "category": "officeAdministration",
-      "appliedUsers": []
+      "appliedUsers": [1]
     }
   ]
 }

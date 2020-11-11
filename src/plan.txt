@@ -25,7 +25,7 @@
 
 - user
     update Ad(add self as candidate) <>
-    update ad( add self to likers )
+    update ad( add self to likers ) <>
     list of ads( accepted/ rejected )
     update user data
     delete account
