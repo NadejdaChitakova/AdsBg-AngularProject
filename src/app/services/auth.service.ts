@@ -1,5 +1,13 @@
+import { Organization } from './../models/organization';
+import { User } from './../models/user';
+import { IUser } from './../models/iuser';
 import { Injectable } from '@angular/core';
-import { IUser } from '../models/iuser';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { catchError, map, subscribeOn, tap } from 'rxjs/operators';
+
+const USER_URL = 'http://localhost:3000/users';
+const ORGANIZATION_URL = 'http://localhost:3000/organizations';
 
 export enum Roles {
   USER = 'user',
@@ -13,47 +21,72 @@ export class AuthService {
   role: Roles;
   isLoggedIn = false;
   loggedInUser: IUser;
+  private users: User[];
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   login(email: string, password: string, loginRole: string): boolean {
     if (loginRole == Roles.USER) {
-      this.loggedInUser = this.userLogin(email, password);
+      this.userLogin(email, password);
     } else {
-      this.loggedInUser = this.organizationLogin(email, password);
+      this.organizationLogin(email, password);
     }
 
     return this.isLoggedIn;
   }
 
   userLogin(email: string, password: string) {
-    let users = this.users.filter((user) => {
-      return user.email === email && user.password === password;
+    this.getUsersData().subscribe((users) => {
+      let filteredUsers = users.filter(
+        (user) => user.email === email && user.password === password
+      );
+
+      if (filteredUsers.length !== 0) {
+        this.isLoggedIn = true;
+        this.role = Roles.USER;
+        this.loggedInUser = filteredUsers[0];
+      }
     });
-
-    if (users.length !== 0) {
-      this.isLoggedIn = true;
-      this.role = Roles.USER;
-    }
-
-    return users[0];
   }
 
   organizationLogin(email: string, password: string) {
-    let org = this.organizations.filter((org) => {
-      return org.email === email && org.password === password;
-    });
+    this.getOrganizationData().subscribe((orgs) => {
+      let filteredOrgs = orgs.filter(
+        (user) => user.email === email && user.password === password
+      );
 
-    if (org.length !== 0) {
-      this.isLoggedIn = true;
-      this.role = Roles.ORGANIZATION;
-    }
-    return org[0];
+      if (filteredOrgs.length !== 0) {
+        this.isLoggedIn = true;
+        this.role = Roles.ORGANIZATION;
+        this.loggedInUser = filteredOrgs[0];
+      }
+    });
   }
 
   logout() {
     this.role = null;
     this.isLoggedIn = false;
     this.loggedInUser = null;
+  }
+
+  private getUsersData(): Observable<User[]> {
+    return this.http.get<User[]>(USER_URL);
+  }
+
+  private getOrganizationData(): Observable<Organization[]> {
+    return this.http.get<Organization[]>(ORGANIZATION_URL);
+  }
+
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+
+      // TODO: better job of transforming error for user consumption
+      console.log(`${operation} failed: ${error.message}`);
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
   }
 }

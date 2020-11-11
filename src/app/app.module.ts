@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AdsComponent } from './pages/ads/ads.component';
@@ -12,6 +13,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { CandidatesComponent } from './pages/candidates/candidates.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { HeaderComponent } from './components/header/header.component';
+import { CreateAdComponent } from './components/create-ad/create-ad.component';
 
 @NgModule({
   declarations: [
@@ -23,8 +25,15 @@ import { HeaderComponent } from './components/header/header.component';
     CandidatesComponent,
     ProfileComponent,
     HeaderComponent,
+    CreateAdComponent,
   ],
-  imports: [BrowserModule, FormsModule, ReactiveFormsModule, AppRoutingModule],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+    HttpClientModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

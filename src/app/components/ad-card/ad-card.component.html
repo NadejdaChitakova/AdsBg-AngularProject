@@ -8,7 +8,11 @@
       {{ ad.likes }}, {{ ad.type }}, {{ ad.category }}, {{ ad.appliedUsers }}
     </p>
 
-    <i class="far fa-heart"></i>
     <button class="btn btn-light" (click)="Like()">like!</button>
+    <button class="btn btn-light" (click)="candidate()">candidate!</button>
+    <br />
+
+    <p>candidates: {{ ad.appliedUsers.length }}</p>
+    <p>likes: {{ ad.likes.length }}</p>
   </div>
 </div>

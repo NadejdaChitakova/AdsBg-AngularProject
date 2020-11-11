@@ -18,13 +18,13 @@
     list of Ads <>
 
 - org
-    add Ads 
+    add Ads <>
     list of candidates
     update ad(accept candidate)
     delete account(deletes all ads for current org)
 
 - user
-    update Ad(add self as candidate)
+    update Ad(add self as candidate) <>
     update ad( add self to likers )
     list of ads( accepted/ rejected )
     update user data

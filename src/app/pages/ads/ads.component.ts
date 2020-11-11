@@ -1,6 +1,7 @@
 import { Ad } from './../../models/ad';
 import { Component, OnInit } from '@angular/core';
 import { AdsService } from 'src/app/services/ads.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-ads',
@@ -10,9 +11,15 @@ import { AdsService } from 'src/app/services/ads.service';
 export class AdsComponent implements OnInit {
   ads: Ad[];
 
-  constructor(private adsService: AdsService) {}
+  constructor(public adsService: AdsService) {
+    //виж после
+    this.adsService.adsSubject.subscribe((ads) => {
+      console.log('updating component', ads);
+      this.ads = ads;
+    });
+  }
 
   ngOnInit(): void {
-    this.ads = this.adsService.getAds();
+    this.adsService.getAds();
   }
 }

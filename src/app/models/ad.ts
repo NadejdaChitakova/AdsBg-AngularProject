@@ -4,10 +4,10 @@ export interface Ad {
   id: number;
   title: string;
   description: string;
-  likes: number;
+  likes: number[];
   type: AdType;
   category: AdCategory;
-  appliedUsers: User[];
+  appliedUsers: number[];
 }
 
 export enum AdType {

@@ -5,13 +5,19 @@
       "email": "qwer",
       "password": "1234",
       "name": "nadq"
+    },
+    {
+      "id": 2,
+      "email": "12345",
+      "password": "12345",
+      "name": "nadq"
     }
   ],
   "organizations": [
     {
       "id": 2,
-      "email": "org@gmail.com",
-      "password": "asdfg",
+      "email": "qwer",
+      "password": "1234",
       "name": "nadq2"
     }
   ],
@@ -20,27 +26,9 @@
       "id": 1,
       "title": "Ad 1",
       "description": "desc",
-      "likes": 0,
+      "likes": [1],
       "type": "fullTime",
       "category": "officeAdministration",
-      "appliedUsers": []
-    },
-    {
-      "id": 2,
-      "title": "Ad 2",
-      "description": "desc 2",
-      "likes": 0,
-      "type": "partTime",
-      "category": "development",
-      "appliedUsers": []
-    },
-    {
-      "id": 3,
-      "title": "Ad 3",
-      "description": "desc 3",
-      "likes": 0,
-      "type": "remote",
-      "category": "development",
       "appliedUsers": []
     }
   ]

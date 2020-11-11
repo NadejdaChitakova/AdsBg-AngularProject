@@ -6,11 +6,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { CandidatesComponent } from './pages/candidates/candidates.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { UserAuthGuardService } from './services/user-auth-guard.service';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'ads', component: AdsComponent },
+  { path: 'ads', component: AdsComponent, canActivate: [] },
   { path: 'ad/detail/:id/candidates', component: CandidatesComponent },
   { path: 'profile/:id', component: ProfileComponent },
 ];
