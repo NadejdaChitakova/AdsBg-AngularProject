@@ -11,7 +11,10 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class AdCardComponent implements OnInit {
   @Input() ad: Ad;
-  constructor(private adsService: AdsService) {}
+  constructor(
+    private adsService: AdsService,
+    public authService: AuthService
+  ) {}
 
   ngOnInit(): void {}
 

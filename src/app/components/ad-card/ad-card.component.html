@@ -12,7 +12,10 @@
     <button class="btn btn-light" (click)="candidate()">candidate!</button>
     <br />
 
-    <p>candidates: {{ ad.appliedUsers.length }}</p>
+    <p>candidates: {{ ad.appliedUsers.size }}</p>
+    <span
+      >curret state: {{ ad.appliedUsers[authService.loggedInUser?.id] }}</span
+    >
     <p>likes: {{ ad.likes.length }}</p>
   </div>
 </div>

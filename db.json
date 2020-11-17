@@ -26,10 +26,17 @@
       "id": 1,
       "title": "Ad 1",
       "description": "desc",
-      "likes": [1],
+      "likes": [
+        1
+      ],
       "type": "fullTime",
       "category": "officeAdministration",
-      "appliedUsers": [1]
+      "appliedUsers": [
+        {
+          "1": "not viewed"
+        },
+        "not viewed"
+      ]
     }
   ]
 }

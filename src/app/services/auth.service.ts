@@ -23,7 +23,14 @@ export class AuthService {
   loggedInUser: IUser;
   private users: User[];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.loggedInUser = {
+      id: 1,
+      name: 'test name',
+      email: 'qwer',
+      password: '1234',
+    };
+  }
 
   login(email: string, password: string, loginRole: string): boolean {
     if (loginRole == Roles.USER) {

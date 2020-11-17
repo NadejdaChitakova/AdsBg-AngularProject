@@ -7,7 +7,13 @@ export interface Ad {
   likes: number[];
   type: AdType;
   category: AdCategory;
-  appliedUsers: number[];
+  appliedUsers: Map<number, CandidateState>;
+}
+
+export enum CandidateState {
+  NOT_VIEWED = 'not viewed',
+  ACCEPTED = 'accepted',
+  REJECTED = 'rejected',
 }
 
 export enum AdType {

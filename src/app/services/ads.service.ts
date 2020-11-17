@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { Ad, AdCategory, AdType } from '../models/ad';
+import { Ad, AdCategory, AdType, CandidateState } from '../models/ad';
 import { User } from '../models/user';
 import { AuthService, Roles } from './auth.service';
 
@@ -53,7 +53,7 @@ export class AdsService {
       type,
       category,
       likes: [],
-      appliedUsers: [],
+      appliedUsers: new Map<number, CandidateState>(),
     };
 
     console.log('creating ad', ad);
@@ -67,9 +67,9 @@ export class AdsService {
     if (this.authService.role !== Roles.USER) return;
 
     let userId = this.authService.loggedInUser.id;
-    if (ad.appliedUsers.includes(userId)) return;
+    if (Array.from(ad.appliedUsers.keys()).includes(userId)) return;
 
-    ad.appliedUsers.push(userId);
+    ad.appliedUsers[userId] = CandidateState.NOT_VIEWED;
 
     this.http
       .put<Ad>(ADS_URL + `/${ad.id}`, ad, this.httpOptions)

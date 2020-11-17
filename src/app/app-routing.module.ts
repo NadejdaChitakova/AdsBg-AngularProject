@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'ads', component: AdsComponent, canActivate: [] },
   { path: 'ad/detail/:id/candidates', component: CandidatesComponent },
-  { path: 'profile/:id', component: ProfileComponent },
+  { path: 'profile', component: ProfileComponent },
 ];
 
 @NgModule({

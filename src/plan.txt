@@ -26,7 +26,15 @@
 - user
     update Ad(add self as candidate) <>
     update ad( add self to likers ) <>
-    list of ads( accepted/ rejected )
+    list of ads( accepted/ rejected ) <>
     update user data
+        * show user data <>
+        * on edit button clicked show edit form
+        * form has cancel and submit
+            * cancel closes the form
+            * submit sends the data to authService
+        * authService.updateUserData sends request to the server to update the user.
+        * when the request is successful update the authService.loggedInUser (changes should be seen in profile.component)
+
     delete account
 
