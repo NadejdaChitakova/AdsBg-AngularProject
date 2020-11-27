@@ -5,5 +5,7 @@
     </li>
   </ul>
 
-  <create-ad></create-ad>
+  <div *ngIf="authService.role === roles.ORGANIZATION">
+    <create-ad></create-ad>
+  </div>
 </div>

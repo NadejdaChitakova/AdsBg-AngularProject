@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, subscribeOn, tap } from 'rxjs/operators';
+import { AdsService } from './ads.service';
 
 const USER_URL = 'http://localhost:3000/users';
 const ORGANIZATION_URL = 'http://localhost:3000/organizations';
@@ -21,15 +22,21 @@ export class AuthService {
   role: Roles;
   isLoggedIn = false;
   loggedInUser: IUser;
-  private users: User[];
+  users: User[];
+
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  };
 
   constructor(private http: HttpClient) {
-    this.loggedInUser = {
-      id: 1,
-      name: 'test name',
-      email: 'qwer',
-      password: '1234',
-    };
+    this.http.get<User[]>(USER_URL).subscribe((users) => {
+      this.users = users;
+
+      // test only delete later.
+      // this.loggedInUser = users[0];
+      // this.isLoggedIn = true;
+      // this.role = Roles.USER;
+    });
   }
 
   login(email: string, password: string, loginRole: string): boolean {
@@ -74,6 +81,31 @@ export class AuthService {
     this.role = null;
     this.isLoggedIn = false;
     this.loggedInUser = null;
+  }
+
+  EditData(name, pass) {
+    this.loggedInUser.name = name;
+    this.loggedInUser.password = pass;
+  }
+
+  updateUserData(name, password) {
+    let updatedUser = { ...this.loggedInUser, name, password };
+
+    this.http
+      .put<User>(
+        USER_URL + `/${this.loggedInUser.id}`,
+        updatedUser,
+        this.httpOptions
+      )
+      .subscribe((_) => (this.loggedInUser = updatedUser));
+  }
+
+  deleteAccount() {
+    let url = this.role === Roles.USER ? USER_URL : ORGANIZATION_URL;
+
+    this.http.delete<IUser>(url + `/${this.loggedInUser.id}`).subscribe((_) => {
+      this.logout();
+    });
   }
 
   private getUsersData(): Observable<User[]> {

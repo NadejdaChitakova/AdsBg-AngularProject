@@ -2,6 +2,7 @@ import { Ad } from './../../models/ad';
 import { Component, OnInit } from '@angular/core';
 import { AdsService } from 'src/app/services/ads.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { AuthService, Roles } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-ads',
@@ -10,9 +11,9 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 })
 export class AdsComponent implements OnInit {
   ads: Ad[];
+  roles = Roles;
 
-  constructor(public adsService: AdsService) {
-    //виж после
+  constructor(public adsService: AdsService, public authService: AuthService) {
     this.adsService.adsSubject.subscribe((ads) => {
       console.log('updating component', ads);
       this.ads = ads;

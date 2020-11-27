@@ -8,6 +8,7 @@ export interface Ad {
   type: AdType;
   category: AdCategory;
   appliedUsers: Map<number, CandidateState>;
+  organization: number;
 }
 
 export enum CandidateState {

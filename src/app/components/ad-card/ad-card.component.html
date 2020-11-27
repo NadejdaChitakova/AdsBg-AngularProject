@@ -5,17 +5,39 @@
       {{ ad.description }}
     </p>
     <p class="card-text">
-      {{ ad.likes }}, {{ ad.type }}, {{ ad.category }}, {{ ad.appliedUsers }}
+      Likes: {{ ad.likes.length }}, Type: {{ ad.type }}, Category:
+      {{ ad.category }}
     </p>
 
-    <button class="btn btn-light" (click)="Like()">like!</button>
-    <button class="btn btn-light" (click)="candidate()">candidate!</button>
+    <div *ngIf="authService.role === roles.USER">
+      <button class="btn btn-light" (click)="Like()">like!</button>
+      <button class="btn btn-light" (click)="candidate()">candidate!</button>
+    </div>
     <br />
 
-    <p>candidates: {{ ad.appliedUsers.size }}</p>
-    <span
-      >curret state: {{ ad.appliedUsers[authService.loggedInUser?.id] }}</span
-    >
+    <div *ngIf="authService.role === roles.ORGANIZATION">
+      <p>candidates:</p>
+      <div *ngFor="let c of candidates" class="jumbotron">
+        <li>
+          <h5 class="card-title">
+            {{ c.name | titlecase }} - {{ ad.appliedUsers[c.id] }}
+          </h5>
+          <button class="btn btn-light" (click)="acceptCandidate(c.id)">
+            Accept
+          </button>
+          <button class="btn btn-light" (click)="rejectCandidate(c.id)">
+            Reject
+          </button>
+        </li>
+      </div>
+    </div>
+
+    <div *ngIf="ad.appliedUsers[authService.loggedInUser?.id] !== undefined">
+      <span
+        >curret state: {{ ad.appliedUsers[authService.loggedInUser?.id] }}</span
+      >
+    </div>
+
     <p>likes: {{ ad.likes.length }}</p>
   </div>
 </div>

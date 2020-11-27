@@ -32,7 +32,6 @@ export class AdsService {
       });
 
       this.adsSubject.next(ads);
-      console.log(this.id);
     });
   }
 
@@ -54,6 +53,7 @@ export class AdsService {
       category,
       likes: [],
       appliedUsers: new Map<number, CandidateState>(),
+      organization: this.authService.loggedInUser.id,
     };
 
     console.log('creating ad', ad);
@@ -65,9 +65,8 @@ export class AdsService {
 
   addCandidate(ad: Ad) {
     if (this.authService.role !== Roles.USER) return;
-
     let userId = this.authService.loggedInUser.id;
-    if (Array.from(ad.appliedUsers.keys()).includes(userId)) return;
+    if (Object.keys(ad.appliedUsers).includes(userId.toString())) return;
 
     ad.appliedUsers[userId] = CandidateState.NOT_VIEWED;
 
@@ -91,10 +90,34 @@ export class AdsService {
     this.http
       .put<Ad>(ADS_URL + `/${ad.id}`, ad, this.httpOptions)
       .subscribe((ad) => {
-        debugger;
         let filteredAds = this._ads.filter((_ad) => _ad.id !== ad.id);
         this.adsSubject.next([ad, ...filteredAds]);
         console.log(ad);
       });
+  }
+
+  updateAd(ad: Ad) {
+    this.http
+      .put<Ad>(ADS_URL + `/${ad.id}`, ad, this.httpOptions)
+      .subscribe((ad) => {
+        let filteredAds = this._ads.filter((_ad) => _ad.id !== ad.id);
+        this.adsSubject.next([ad, ...filteredAds]);
+        console.log(ad);
+      });
+  }
+
+  deleteAds(organizationId: number) {
+    console.log('delete ads');
+    debugger;
+    for (let ad of this._ads) {
+      if (ad.organization === organizationId) {
+        this.http.delete<Ad>(ADS_URL + `/${ad.id}`).subscribe((_) => {
+          debugger;
+          let adIndex = this._ads.indexOf(ad);
+          this._ads.splice(adIndex, 1);
+          this.adsSubject.next(this._ads);
+        });
+      }
+    }
   }
 }

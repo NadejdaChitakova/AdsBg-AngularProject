@@ -10,7 +10,7 @@
       "id": 2,
       "email": "12345",
       "password": "12345",
-      "name": "nadq"
+      "name": "nadq2"
     }
   ],
   "organizations": [
@@ -18,7 +18,7 @@
       "id": 2,
       "email": "qwer",
       "password": "1234",
-      "name": "nadq2"
+      "name": "nadq org OOD"
     }
   ],
   "ads": [
@@ -26,17 +26,26 @@
       "id": 1,
       "title": "Ad 1",
       "description": "desc",
-      "likes": [
-        1
-      ],
+      "likes": [1, 2],
       "type": "fullTime",
       "category": "officeAdministration",
-      "appliedUsers": [
-        {
-          "1": "not viewed"
-        },
-        "not viewed"
-      ]
+      "appliedUsers": {
+        "1": "accepted",
+        "2": "rejected"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Ad 2",
+      "description": "desc2",
+      "likes": [1, 2],
+      "type": "fullTime",
+      "category": "officeAdministration",
+      "appliedUsers": {
+        "1": "accepted",
+        "2": "accepted"
+      },
+      "organization": 2
     }
   ]
 }
